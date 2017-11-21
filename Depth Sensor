@@ -1,0 +1,30 @@
+#!/usr/bin/python
+import os, sys
+from wallaby import *
+import constants as c   
+
+def depth_sensed():
+    return(analog(c.depth_sensor)>c.depth_mid)
+
+def BlackRight():
+    return(analog(c.right_tophat)>c.right_tophat_bw)
+  
+def BlackLeft():
+    return(analog(c.left_tophat)>c.left_tophat_bw)
+
+def main():
+    print "Hello World"
+    while c.depth_sensor_value>c.depth_sensor_far: 
+        if  BlackRight():
+            mav(c.right_motor,-1000)
+            print"Yah"    
+        else:
+            mav(c.left_motor,1000)
+            print"still going"    
+    mav(c.left_motor,0)
+    mav(c.right_motor,0)
+    print "Done" 
+
+if __name__== "__main__":
+    sys.stdout = os.fdopen(sys.stdout.fileno(),"w",0)
+    main();
